@@ -1,60 +1,56 @@
-class MorseDecoder
-  MORSE_CODE = {
-    '.-'   => 'A',
-    '-...' => 'B',
-    '-.-.' => 'C',
-    '-..'  => 'D',
-    '.'    => 'E',
-    '..-.' => 'F',
-    '--.'  => 'G',
-    '....' => 'H',
-    '..'   => 'I',
-    '.---' => 'J',
-    '-.-'  => 'K',
-    '.-..' => 'L',
-    '--'   => 'M',
-    '-.'   => 'N',
-    '---'  => 'O',
-    '.--.' => 'P',
-    '--.-' => 'Q',
-    '.-.'  => 'R',
-    '...'  => 'S',
-    '-'    => 'T',
-    '..-'  => 'U',
-    '...-' => 'V',
-    '.--'  => 'W',
-    '-..-' => 'X',
-    '-.--' => 'Y',
-    '--..' => 'Z',
-    '.----' => '1',
-    '..---' => '2',
-    '...--' => '3',
-    '....-' => '4',
-    '.....' => '5',
-    '-....' => '6',
-    '--...' => '7',
-    '---..' => '8',
-    '----.' => '9',
-    '-----' => '0'
-  }
+MORSE_KEY = {
+  '.-' => 'A',
+  '-...' => 'B',
+  '-.-.' => 'C',
+  '-..' => 'D',
+  '.' => 'E',
+  '..-.' => 'F',
+  '--.' => 'G',
+  '....' => 'H',
+  '..' => 'I',
+  '.---' => 'J',
+  '-.-' => 'K',
+  '.-..' => 'L',
+  '--' => 'M',
+  '-.' => 'N',
+  '---' => 'O',
+  '.--.' => 'P',
+  '--.-' => 'Q',
+  '.-.' => 'R',
+  '...' => 'S',
+  '-' => 'T',
+  '..-' => 'U',
+  '...-' => 'V',
+  '.--' => 'W',
+  '-..-' => 'X',
+  '-.--' => 'Y',
+  '--..' => 'Z'
+}.freeze
 
-  def self.decode_char(morse)
-    MORSE_CODE[morse]
-  end
-
-  def self.decode_word(morse_word)
-    morse_chars = morse_word.split(' ')
-    decoded_word = morse_chars.map { |morse| decode_char(morse) }
-    decoded_word.join('')
-  end
-
-  def self.decode(message)
-    morse_words = message.split('   ')
-    decoded_message = morse_words.map { |morse_word| decode_word(morse_word) }
-    decoded_message.join(' ')
-  end
+def decode_char(char)
+  MORSE_KEY[char].upcase
 end
 
-message = '.-   -... --- -..-   ..-. ..- .-.. .-..   --- ..-.   .-. ..- -... .. . ...'
-decoded_message = MorseDecoder.decode(message)
-puts decoded_message
+puts decode_char('.-')
+
+def decode_word(word)
+  splited = word.split
+  reponse = ''
+  splited.each do |c|
+    reponse += decode_char(c)
+  end
+  reponse.upcase
+end
+
+puts decode_word('-- -.--')
+
+def decode(string)
+  splited_string = string.split('   ')
+  message = ''
+  splited_string.each do |word|
+    message += "#{decode_word(word)} "
+  end
+  message.upcase
+end
+puts decode('-- -.--   -. .- -- .')
+puts decode('.-   -... --- -..-   ..-. ..- .-.. .-..   --- ..-.   .-. ..- -... .. . ...')
